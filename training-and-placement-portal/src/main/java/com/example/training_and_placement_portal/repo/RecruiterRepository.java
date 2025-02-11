@@ -1,16 +1,12 @@
 package com.example.training_and_placement_portal.repo;
 
-
-import java.util.List;
-
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import com.example.training_and_placement_portal.model.Student;
-
 import org.springframework.stereotype.Repository;
 
+import com.example.training_and_placement_portal.model.Recruiter;
+
 @Repository
-public interface StudentRepository extends MongoRepository<Student, String> {
+public interface RecruiterRepository extends MongoRepository<Recruiter, String> {
     boolean existsByEmail(String email);
 }
 
