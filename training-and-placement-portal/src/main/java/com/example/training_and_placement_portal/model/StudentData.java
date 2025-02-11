@@ -129,6 +129,10 @@ public class StudentData {
 	    this.collegeName = collegeName;
 	}
 
+    public StudentData() {
+        //TODO Auto-generated constructor stub
+    }
+
 
 	
 	
