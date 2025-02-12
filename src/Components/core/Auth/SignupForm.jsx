@@ -3,8 +3,6 @@ import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import { setSignupData } from "../../../slices/authSlice";
 import { ACCOUNT_TYPE } from "../../../utils/constants";
 import Tab from "../../common/Tab";
 import { setProgress } from "../../../slices/loadingBarSlice";
@@ -13,7 +11,6 @@ function SignupForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // Student or Recruiter
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
 
   const [formData, setFormData] = useState({
@@ -29,7 +26,6 @@ function SignupForm() {
 
   const { firstName, lastName, email, password, confirmPassword } = formData;
 
-  // Handle input fields when value changes
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
@@ -37,7 +33,6 @@ function SignupForm() {
     }));
   };
 
-  // Handle Form Submission
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
@@ -57,7 +52,7 @@ function SignupForm() {
     try {
       dispatch(setProgress(50));
 
-      const response = await fetch("http://localhost:8080/api/auth/signup", {
+      const response = await fetch("http://localhost:8080/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -70,7 +65,6 @@ function SignupForm() {
 
       if (response.ok) {
         toast.success(data.message || "Signup successful!");
-        dispatch(setSignupData(signupData));
         navigate("/login");
       } else {
         toast.error(data.message || "Signup failed, please try again.");
@@ -80,7 +74,7 @@ function SignupForm() {
       toast.error("Something went wrong. Please try again.");
     }
 
-    // Reset Form
+    // Reset form
     setFormData({
       firstName: "",
       lastName: "",
@@ -89,9 +83,10 @@ function SignupForm() {
       confirmPassword: "",
     });
     setAccountType(ACCOUNT_TYPE.STUDENT);
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   };
 
-  // Data to pass to Tab component
   const tabData = [
     { id: 1, tabName: "Student", type: ACCOUNT_TYPE.STUDENT },
     { id: 2, tabName: "Recruiter", type: ACCOUNT_TYPE.INSTRUCTOR },
@@ -204,7 +199,6 @@ function SignupForm() {
 
         <button
           type="submit"
-          onClick={() => dispatch(setProgress(60))}
           className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
         >
           Create Account

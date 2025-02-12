@@ -37,12 +37,13 @@ function LoginForm() {
     try {
       dispatch(setProgress(50));
 
-      const response = await fetch("http://localhost:8080/api/auth/login", {
+      const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password,accountType }),
       });
 
       const data = await response.json();
@@ -51,6 +52,7 @@ function LoginForm() {
       if (response.ok) {
         toast.success(data.message || "Login successful!");
         dispatch(setToken(data.token));
+        localStorage.setItem("token", data.token); // Store token
         navigate("/dashboard");
       } else {
         toast.error(data.message || "Invalid credentials. Please try again.");
