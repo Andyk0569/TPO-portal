@@ -5,7 +5,7 @@ import { MdInterests, MdWorkspaces } from 'react-icons/md';
 import campusImage from '../assets/Images/campus-life.jpg'; // Add your own images
 import interviewImage from '../assets/Images/mock-interview.jpg';
 import HighlightText from '../Components/core/HomePage/HighlightText';
-
+import Button from '../Components/core/HomePage/Button';
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
@@ -23,7 +23,7 @@ function ForStudents() {
   return (
     <div className="min-h-screen bg-richblack-900 text-richblack-50">
       {/* Hero Section */}
-      <section className="relative h-96 flex items-center justify-center overflow-hidden">
+      <section className="relative h-96 flex items-center justify-center overflow-hidden border ">
         <div className="absolute inset-0">
           <img src={campusImage} alt="Campus Life" className="w-full h-full object-cover opacity-40" />
         </div>
@@ -34,12 +34,14 @@ function ForStudents() {
           variants={fadeIn}
           className="relative text-center z-10"
         >
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-300 to-teal-300 bg-clip-text text-transparent">
-            <HighlightText text={"Student Success Hub"} />
-          </h1>
-          <p className="text-xl text-richblack-300 max-w-2xl mx-auto">
-            Your integrated platform for academic growth and career development
-          </p>
+          <div className=' border p-5 rounded-xl bg-black bg-opacity-50' >
+            <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-300 to-teal-300 bg-clip-text text-transparent">
+              <HighlightText text={"Student Success Hub"} />
+            </h1>
+            <p className="text-xl text-richblack-300 max-w-2xl mx-auto">
+              Your integrated platform for academic growth and career development
+            </p>
+          </div>
         </motion.div>
       </section>
 
@@ -138,17 +140,18 @@ function ForStudents() {
                 <div className="space-y-4 mb-8">
                   {['Technical Prep', 'HR Simulations', 'Coding Tests', 'Group Discussions'].map((item, index) => (
                     <div key={item} className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-green-300 text-richblack-900 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-green-300 text-richblack-50 rounded-full flex items-center justify-center">
                         {index + 1}
                       </div>
                       <span className="text-lg">{item}</span>
                     </div>
                   ))}
                 </div>
-                <button className="bg-green-300 text-richblack-900 px-8 py-3 rounded-xl hover:bg-green-200 transition-all font-bold flex items-center gap-2">
+                <button className= "bg-yellow-50 text-black px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:scale-95 transition-all duration-200">
                   Schedule Session
                   <FaRegArrowAltCircleRight />
                 </button>
+
               </div>
             </div>
           </motion.div>
