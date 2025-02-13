@@ -3,7 +3,7 @@ import {FaArrowRight} from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import CTAButton from '../Components/core/HomePage/Button';
 import HighlightText from '../Components/core/HomePage/HighlightText';
-import Banner from "../assets/Images/banner.mp4"
+import Banner from "../assets/Images/banner.jpeg"
 import CodeBlocks from "../Components/core/HomePage/CodeBlocks";
 import TimelineSection from '../Components/core/HomePage/TimelineSection';
 import InstructorSection from '../Components/core/HomePage/InstructorSection';
@@ -62,17 +62,14 @@ function Home() {
                 </CTAButton>
 
             </div>
+            <div className='mx-auto my-12 shadow-blue-200 w-[70%] relative flex flex-col items-center justify-center text-center'>
+                <div className='grad2 -top-10 w-[800px]'></div>
+                <div className='photo'>
+                <img src={Banner} className=" object-cover rounded-lg" />
+            </div>
 
-            <div className='mx-3 my-12 shadow-blue-200 w-[70%] relative'>
-              <div className='grad2 -top-10 w-[800px]'></div>
-            <video className='video'
-            muted
-            loop
-            autoPlay
-            >
-            <source  src={Banner} type="video/mp4" />
-            </video>
         </div>
+
 
         <div >
             <CodeBlocks 

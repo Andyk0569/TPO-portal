@@ -34,7 +34,7 @@ const Footer = () => {
               <h1 className="text-richblack-50 font-semibold text-[16px]">
                 JJMCOE
               </h1>
-              <div className="flex gap-3 text-lg">
+              <div className="flex gap-3 text-lg ">
                 <FaFacebook />
                 <FaGoogle />
                 <FaTwitter />
@@ -61,7 +61,7 @@ const Footer = () => {
             </div>
             
             <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
-              <h4 className="text-richblack-50 font-semibold text-[16px]">Quick Links</h4>
+              <h4 className="text-richblack-50 font-semibold text-[16px]">Take me too</h4>
               <ul>
                 <li><a href="#" className="hover:underline">Home</a></li>
                 <li><a href="#" className="hover:underline">About</a></li>
@@ -75,8 +75,8 @@ const Footer = () => {
           {/* Section 2 */}
           <div className="lg:w-[50%] md:flex flex-col  pl-3 lg:pl-5 gap-3 hidden">
             <h4 className="text-lg font-semibold mb-4 text-richblack-50 ">Contact Us</h4>
-            <p>Email: <a href="mailto:info@example.com" className="hover:underline">info@example.com</a></p>
-            <p>Phone: <a href="tel:+1234567890" className="hover:underline">+1234567890</a></p>
+            <p>Email: <a href="tpo@jjmcoe.ac.in" className="hover:underline">tpo@jjmcoe.ac.in</a></p>
+            <p>Phone: <a href="9860919125" className="hover:underline">+9860919125</a></p>
           </div>
         </div>
       </div>

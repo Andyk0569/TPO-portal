@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { FaCalendarAlt, FaChalkboardTeacher, FaBook, FaUserGraduate, FaRegArrowAltCircleRight } from 'react-icons/fa';
 import { MdInterests, MdWorkspaces } from 'react-icons/md';
-import campusImage from '../assets/Images/campus-life.jpg'; // Add your own images
+import campusImage from '../assets/Images/campus-life.jpeg'; // Add your own images
 import interviewImage from '../assets/Images/mock-interview.jpg';
 import HighlightText from '../Components/core/HomePage/HighlightText';
 import Button from '../Components/core/HomePage/Button';

@@ -1,8 +1,8 @@
 import React from 'react'
 import HighlightText from '../Components/core/HomePage/HighlightText';
-import BannerImage1 from "../assets/Images/aboutus1.webp"
-import BannerImage2 from "../assets/Images/aboutus2.webp"
-import BannerImage3 from "../assets/Images/aboutus3.webp"
+import BannerImage1 from "../assets/Images/aboutus1.jpg"
+import BannerImage2 from "../assets/Images/aboutus2.jpg"
+import BannerImage3 from "../assets/Images/aboutus3.jpg"
 import Quote from "../Components/core/AboutPage/Quote"
 import FoundingStory from "../assets/Images/FoundingStory.png"
 import StatsComponent from '../Components/core/AboutPage/Stats'
@@ -26,11 +26,12 @@ const About = () => {
                 </p>
             </header>
             <div className='sm:h-[70px] lg:h-[150px]'></div>
-            <div className='absolute bottom-0 left-[50%] grid w-[100%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5'>
-                <img src={BannerImage1} />
-                <img src={BannerImage2} />
-                <img src={BannerImage3} />
+              <div className='absolute bottom-0 left-[50%] grid w-[100%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5'>
+              <img src={BannerImage1} className="w-80 h-80 rounded-2xl object-cover" />
+              <img src={BannerImage2} className="w-80 h-80 rounded-2xl object-cover" />
+              <img src={BannerImage3} className="w-80 h-80 rounded-2xl object-cover" />
             </div>
+
         </div>
       </section>
 
@@ -53,9 +54,12 @@ const About = () => {
                 {/* left box */}
                 <div className='my-24 flex lg:w-[50%] flex-col gap-10'>
                     <h1 className='bg-gradient-to-br from-[#833AB4] via-[#FD1D1D] to-[#FCB045] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] '>Our Vision</h1>
-                    <p className='text-base font-medium text-richblack-300 lg:w-[95%]'>
-                      Our vision is to empower students with the skills, knowledge, and confidence to excel in the corporate world.
-                      We strive to create a robust placement ecosystem that ensures students are industry-ready and equipped for success.
+                    <p className='text-base font-medium text-richblack-300 lg:w-[95%] text-justify leading-relaxed'>
+                    To be the front runner in the field of computer science and engineering to create skilled,
+                    knowledgeable and ethical professionals for development of society.
+                    <br/>M1: To produce Competent Technocrats to meet modern societal and industrial challenges.
+                    <br/>M2: To create ethical and skilled human resources through quality education and various extension activities and outreach programs.
+                    <br/>M3: To leverage technical expertise to solve societal issues for its sustainable development.
                     </p>
                 </div>
                 {/* right box */}
@@ -69,9 +73,13 @@ const About = () => {
                 {/* left box */}
                 <div className='my-24 flex lg:w-[40%] flex-col gap-10'>
                     <h1 className='bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] '>Our Mission</h1>
-                    <p className='text-base font-medium text-richblack-300 lg:w-[95%]'>
+                    <p className='text-base font-medium text-richblack-300 lg:w-[95%] text-justify leading-relaxed'>
                       We are committed to providing students with top-notch training, industry exposure, and recruitment opportunities. 
                       Our mission is to build strong partnerships with recruiters, conduct skill development workshops, and guide students towards fulfilling careers.
+                      <br/>M1: To provide quality education with smart tools to face challenges of industry and society.
+                      <br/>M2: To create ethical human resource to provide service to the community.
+                      <br/>M3: To associate with industry for giving opportunities to students to develop their employability and entrepreneur skills.
+
                     </p>
                 </div>
 
@@ -80,7 +88,7 @@ const About = () => {
                     <h1 className='bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text text-4xl font-semibold lg:w-[70%] '>
                         Placement Assistance
                     </h1>
-                    <p className='text-base font-medium text-richblack-300 lg:w-[95%]'>
+                    <p className='text-base font-medium text-richblack-300 lg:w-[95%] text-justify leading-relaxed'>
                       We offer resume-building sessions, mock interviews, and career counseling to help students prepare for job placements. 
                       Our TPO cell connects students with recruiters, ensuring they find the right opportunities to launch their careers.
                     </p>
