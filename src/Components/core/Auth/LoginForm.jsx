@@ -53,14 +53,16 @@ function LoginForm() {
         toast.success(data.message || "Login successful!");
         dispatch(setToken(data.token));
         localStorage.setItem("token", data.token); // Store token
+        toast.success("Login successful")
         navigate("/dashboard");
       } else {
-        toast.error(data.message || "Invalid credentials. Please try again.");
-      }
-    } catch (error) {
-      dispatch(setProgress(100));
-      toast.error("Something went wrong. Please try again.");
-    }
+          toast.error(data.message || "Invalid credentials. Please try again.");
+        }
+      } catch (error) {
+          dispatch(setProgress(100));
+          toast.error("Something went wrong. Please try again.");
+        }
+      // navigate("/dashboard/my-profile");
   };
   const tabData = [
       { id: 1, tabName: "Student", type: ACCOUNT_TYPE.STUDENT },

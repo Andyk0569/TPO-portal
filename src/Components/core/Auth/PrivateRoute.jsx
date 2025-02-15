@@ -6,6 +6,7 @@ const PrivateRoute = ({children}) => {
 
     const {token} = useSelector((state) => state.auth);
 
+    // if(true)
     if(token !== null)
         return children
     else
