@@ -1,14 +1,15 @@
 package com.example.training_and_placement_portal.repo;
 
-
-
-import com.example.training_and_placement_portal.model.OTP;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import com.example.training_and_placement_portal.model.OTP;
+
 import java.util.Optional;
+import java.util.List;
+
+
 
 public interface OTPRepository extends MongoRepository<OTP, String> {
-
-    // Custom query to find the latest OTP for a specific email
-    Optional<OTP> findTopByEmailOrderByCreatedAtDesc(String email);
+    List<OTP> findTop1ByEmailOrderByCreatedAtDesc(String email);
+    Optional<OTP> findByOtp(String otp);
 }
