@@ -3,17 +3,16 @@ import { toast } from "react-hot-toast";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { ACCOUNT_TYPE } from "../../../utils/constants";
-import { setToken, setLoading, setSignupData } from "../../../slices/authSlice";
+import { setToken } from "../../../slices/authSlice";
 import { setProgress } from "../../../slices/loadingBarSlice";
 import Tab from "../../common/Tab";
+import { ACCOUNT_TYPE } from "../../../utils/constants";
 
 function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
+  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT); // Can be used in UI if needed
   
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,44 +34,47 @@ function LoginForm() {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(setProgress(50));
+      dispatch(setProgress(40)); // Show progress
 
       const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          
         },
-        body: JSON.stringify({ email, password,accountType }),
+        body: JSON.stringify({ email, password }), // Removed accountType
       });
 
       const data = await response.json();
-      dispatch(setProgress(100));
+      dispatch(setProgress(80)); // Increase progress bar
 
       if (response.ok) {
         toast.success(data.message || "Login successful!");
         dispatch(setToken(data.token));
-        localStorage.setItem("token", data.token); // Store token
-        toast.success("Login successful")
-        navigate("/dashboard");
+        localStorage.setItem("token", data.token); // Store token in localStorage
+        dispatch(setProgress(100));
+        navigate("/dashboard"); // Redirect to dashboard
       } else {
-          toast.error(data.message || "Invalid credentials. Please try again.");
-        }
-      } catch (error) {
-          dispatch(setProgress(100));
-          toast.error("Something went wrong. Please try again.");
-        }
-      // navigate("/dashboard/my-profile");
+        toast.error(data.message || "Invalid credentials. Please try again.");
+        dispatch(setProgress(100));
+      }
+    } catch (error) {
+      dispatch(setProgress(100));
+      toast.error("Something went wrong. Please try again.");
+    }
   };
+
   const tabData = [
-      { id: 1, tabName: "Student", type: ACCOUNT_TYPE.STUDENT },
-      { id: 2, tabName: "Recruiter", type: ACCOUNT_TYPE.RECRUITER },
-    ];
+    { id: 1, tabName: "Student", type: ACCOUNT_TYPE.STUDENT },
+    { id: 2, tabName: "Recruiter", type: ACCOUNT_TYPE.RECRUITER },
+  ];
 
   return (
     <div>
+      {/* Tabs for account type (optional functionality) */}
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
+
       <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
+        {/* Email */}
         <label className="w-full">
           <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
             Email Address <sup className="text-pink-200">*</sup>
@@ -88,6 +90,7 @@ function LoginForm() {
           />
         </label>
 
+        {/* Password */}
         <label className="relative w-full">
           <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
             Password <sup className="text-pink-200">*</sup>
@@ -113,6 +116,7 @@ function LoginForm() {
           </span>
         </label>
 
+        {/* Submit Button */}
         <button
           type="submit"
           onClick={() => dispatch(setProgress(60))}

@@ -36,6 +36,7 @@ public class AuthService {
     @Autowired
     private MailService mailService; // Implement similar to mailSender utility
     
+    @Autowired
     private JwtUtil jwtUtil;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
