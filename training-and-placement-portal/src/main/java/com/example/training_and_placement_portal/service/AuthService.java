@@ -118,4 +118,3 @@ public class AuthService {
                 "Password updated successfully for " + user.getFirstName() + " " + user.getLastName());
     }
 }
-

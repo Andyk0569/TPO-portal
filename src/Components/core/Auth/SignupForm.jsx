@@ -7,12 +7,16 @@ import { ACCOUNT_TYPE } from "../../../utils/constants";
 import Tab from "../../common/Tab";
 import { setProgress } from "../../../slices/loadingBarSlice";
 
+import OTPModal from "../../../modal/OTPModal"; //otpmodal
+
 function SignupForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
-
+  const [otpModalOpen, setOtpModalOpen] = useState(false);
+  const [generatedOtp, setGeneratedOtp] = useState("");
+  const [emailForOtp, setEmailForOtp] = useState("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -41,16 +45,51 @@ function SignupForm() {
       return;
     }
 
-    const signupData = {
-      firstName,
-      lastName,
-      email,
-      password,
-      accountType,
-    };
-
     try {
       dispatch(setProgress(50));
+      // Send OTP first
+      const otpResponse = await fetch("http://localhost:8080/auth/ssendotp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const otpData = await otpResponse.text();
+      dispatch(setProgress(100));
+
+      if (otpResponse.ok) {
+        toast.success("OTP sent to email!");
+        setGeneratedOtp(otpData);
+        setEmailForOtp(email);
+        setOtpModalOpen(true); // Open OTP modal
+      } else {
+        toast.error(otpData || "Failed to send OTP");
+      }
+    } catch (error) {
+      dispatch(setProgress(100));
+      toast.error("Something went wrong while sending OTP");
+    }
+  };
+
+  const handleOtpVerification = async (enteredOtp) => {
+    if (enteredOtp !== generatedOtp) {
+      toast.error("Incorrect OTP");
+      return;
+    }
+
+    try {
+      dispatch(setProgress(30));
+      const signupData = {
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+        accountType,
+        otp: enteredOtp,
+      };
 
       const response = await fetch("http://localhost:8080/auth/signup", {
         method: "POST",
@@ -60,31 +99,20 @@ function SignupForm() {
         body: JSON.stringify(signupData),
       });
 
-      const data = await response.json();
+      const data = await response.text();
       dispatch(setProgress(100));
 
       if (response.ok) {
-        toast.success(data.message || "Signup successful!");
+        toast.success(data || "Signup successful!");
+        setOtpModalOpen(false);
         navigate("/login");
       } else {
-        toast.error(data.message || "Signup failed, please try again.");
+        toast.error(data || "Signup failed");
       }
     } catch (error) {
       dispatch(setProgress(100));
-      toast.error("Something went wrong. Please try again.");
+      toast.error("Signup failed");
     }
-
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-    setAccountType(ACCOUNT_TYPE.STUDENT);
-    setShowPassword(false);
-    setShowConfirmPassword(false);
   };
 
   const tabData = [
@@ -94,14 +122,18 @@ function SignupForm() {
 
   return (
     <div>
-      {/* Tab */}
+      {otpModalOpen && (
+        <OTPModal
+          email={emailForOtp}
+          onClose={() => setOtpModalOpen(false)}
+          onVerify={handleOtpVerification}
+        />
+      )}
       <Tab tabData={tabData} field={accountType} setField={setAccountType} />
-
-      {/* Form */}
       <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
         <div className="flex gap-x-4">
           <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-[0.875rem] text-richblack-5">
               First Name <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -115,7 +147,7 @@ function SignupForm() {
             />
           </label>
           <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-[0.875rem] text-richblack-5">
               Last Name <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -131,7 +163,7 @@ function SignupForm() {
         </div>
 
         <label className="w-full">
-          <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+          <p className="mb-1 text-[0.875rem] text-richblack-5">
             Email Address <sup className="text-pink-200">*</sup>
           </p>
           <input
@@ -147,7 +179,7 @@ function SignupForm() {
 
         <div className="flex gap-x-4">
           <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-[0.875rem] text-richblack-5">
               Create Password <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -161,7 +193,7 @@ function SignupForm() {
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+              className="absolute right-3 top-[38px] cursor-pointer"
             >
               {showPassword ? (
                 <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
@@ -172,7 +204,7 @@ function SignupForm() {
           </label>
 
           <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
+            <p className="mb-1 text-[0.875rem] text-richblack-5">
               Confirm Password <sup className="text-pink-200">*</sup>
             </p>
             <input
@@ -186,7 +218,7 @@ function SignupForm() {
             />
             <span
               onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+              className="absolute right-3 top-[38px] cursor-pointer"
             >
               {showConfirmPassword ? (
                 <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />

@@ -25,7 +25,7 @@ public class AuthController {
         user.setEmail(request.get("email"));
         user.setPassword(request.get("password"));
         user.setAccountType(request.get("accountType"));
-        user.setContactNumber(request.get("contactNumber"));
+        //user.setContactNumber(request.get("contactNumber"));
 
         return authService.signup(user, request.get("otp"), request.get("confirmPassword"));
     }
